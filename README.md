@@ -11,3 +11,10 @@ In this project I will develop a database-backed web site using Django.
 - The project must have a feature for end-users to log in. This can be using the internal Django authorization with manually created accounts or use a social login from one or more of the common providers (Github, Google, Twitter, Facebook, etc).
 - The project must have at least one example of data coming into the site from users. This could be as simple as a comment or ranking capability or you could build a completely social site intended to be built by the crowd.
 - The project is intended to have a nice graphic design - it does not have to be stunning but it also not be default browser with Times New Roman font on a white background
+
+### One-to-many relationships:
+- User  id
+- Time
+- investment type
+
+### Many-to-many relationships:
