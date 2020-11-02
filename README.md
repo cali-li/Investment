@@ -18,3 +18,8 @@ In this project I will develop a database-backed web site using Django.
 - investment type
 
 ### Many-to-many relationships:
+
+
+### Samples:
+
+sample website(http://liwenjing.pythonanywhere.com/ads/)
