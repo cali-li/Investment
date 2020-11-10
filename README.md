@@ -24,19 +24,19 @@ In this project I will develop a database-backed web site using Django.
 
 The **main palettes** I used in this design are listed in the first image. 
 
-<img src="UI_design/IMG_1410.png" alt="Login Page" height="260" align="center" style="margin: auto; margin-bottom: 20px;">
+<img src="UI_design/IMG_1410.png" alt="Login Page" height="500" align="center" style="margin: auto; margin-bottom: 20px;">
 
 * The first image: This is the login page. It contains account login (the combination of User, Email, and Password) and social login (GitHub login).
 
-<img src="UI_design/IMG_1411.png" alt="Main Page" height="260" align="center" style="margin: auto; margin-bottom: 20px;">
+<img src="UI_design/IMG_1411.png" alt="Main Page" height="500" align="center" style="margin: auto; margin-bottom: 20px;">
 
 * The second image: The top block is the main page, which is a list of line charts. People can add comments below. Click on the "trash" icon will navigate users to the confirmation page below.
 
-<img src="UI_design/IMG_1412.png" alt="Log out Page" height="260" align="center" style="margin: auto; margin-bottom: 20px;">
+<img src="UI_design/IMG_1412.png" alt="Log out Page" height="500" align="center" style="margin: auto; margin-bottom: 20px;">
 
 * The third page: Users can still find charts after they log out if there are any charts that have been published publicly - users can choose to make their stats public or not which is an option that was listed on the fourth image.
 
-<img src="UI_design/IMG_1413.png" alt="Edit Page" height="260" align="center" style="margin: auto; margin-bottom: 20px;">
+<img src="UI_design/IMG_1413.png" alt="Edit Page" height="500" align="center" style="margin: auto; margin-bottom: 20px;">
 
 * The fourth page: Clicking on the "add table" button, users can add, edit, and delete tables. There are two tables in this application - one is the type table, users can specify APIs (if there is any available) and divide their investments into several types; the other one is the revenue table which can be updated automatically if the APIs were given (I would consider this function as a bonus) or can be specified by users themselves.
 
