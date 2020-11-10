@@ -28,7 +28,7 @@ The **main palettes** I used in this design are listed in the first image.
 
 * The first image: This is the login page. It contains account login (the combination of User, Email, and Password) and social login (GitHub login).
 
-<img src="UI_design/IMG_1411.png" alt="Main Page" height="500" align="center" style="margin: auto; margin-bottom: 20px;">
+<img src="UI_design/IMG_1411.png" alt="Main Page" height="600" align="center" style="margin: auto; margin-bottom: 20px;">
 
 * The second image: The top block is the main page, which is a list of line charts. People can add comments below. Click on the "trash" icon will navigate users to the confirmation page below.
 
