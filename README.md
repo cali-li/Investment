@@ -19,6 +19,7 @@ In this project I will develop a database-backed web site using Django.
 
 ### Many-to-many relationships:
 
+<img src="data-model.png" alt="Data Model" height="500" align="center" style="margin: auto; margin-bottom: 20px;">
 
 ### UI Design scratch
 
