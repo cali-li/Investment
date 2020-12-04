@@ -3,10 +3,11 @@ Investment web application - SI 664 Personal Project
 
 In this project I developed a database-backed web site using Django.
 
-The final look:
+The final project:
 
 https://project11111.pythonanywhere.com
 
+The code is located at the **django_projects** folder
 
 ### Data models:
 
