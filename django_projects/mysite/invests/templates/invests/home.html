@@ -1,0 +1,134 @@
+<style>
+.btn1:link, .btn1:visited {
+  color: rgba(255, 99, 132, 1);
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+}
+
+.btn1:hover, .btn1:active {
+  color: rgba(255, 99, 132, 0.4);
+}
+.btn2:link, .btn2:visited {
+  background-color: rgba(255, 99, 132, 1);
+  color: white;
+  padding: 3px 5px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+}
+
+.btn2:hover, .btn2:active {
+  background-color: rgba(255, 99, 132, 0.4);
+}
+</style>
+
+{% extends "base_menu.html" %}
+{% block content %}
+
+  <div id="container" style="width: 50%;display: block;margin: 5rem auto;" class='text-center'>
+    <canvas id="invest-chart" data-url="{% url 'invests:invest-chart' %}"></canvas>
+  <canvas id="invest-chart2" data-url="{% url 'invests:invest-chart2' %}"></canvas>
+  </div>
+  <div class="container" style='text-align: center;'>
+<a href="{% url 'invests:invest_list' %}" style='text-align: center;display:inline-block;' class='btn2'>Go To My List</a>
+</div>
+  <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js"></script>
+  <script>
+    $(function () {
+
+      var $investChart2 = $("#invest-chart2");
+      $.ajax({
+        url: $investChart2.data("url"),
+        success: function (data) {
+            console.log(data.labels);
+          var ctx = $investChart2[0].getContext("2d");
+
+          new Chart(ctx, {
+            type: 'pie',
+            data: {
+              labels: data.labels,
+              datasets: [{
+                backgroundColor: 'rgba(255, 99, 132, 0.5)',
+                data: data.data
+              }]
+            },
+            options: {
+              responsive: true,
+              legend: {
+                position: 'bottom',
+              },
+              title: {
+                display: true,
+                text: 'Investment Proportion'
+              },
+            }
+          });
+
+        }
+      });
+
+    });
+    $(function () {
+
+      var $investChart = $("#invest-chart");
+      $.ajax({
+        url: $investChart.data("url"),
+        success: function (data) {
+            console.log(data);
+          var ctx = $investChart[0].getContext("2d");
+
+          new Chart(ctx, {
+            type: 'bar',
+            data: {
+              labels: data.labels,
+              datasets: [{
+                label: 'Investment($)',
+                backgroundColor: 'rgba(255, 99, 132, 0.5)',
+                borderColor:'rgba(255, 99, 132, 1)',
+                data: data.data
+              }]
+            },
+            options: {
+              responsive: true,
+              legend: {
+                position: 'bottom',
+              },
+              title: {
+                display: true,
+                text: 'Investments over time'
+              },
+              scales: {
+        yAxes: [{
+            ticks: {
+                beginAtZero: true
+            }
+        }]
+    }
+            }
+          });
+
+        }
+      });
+
+    });
+
+  </script>
+
+{% endblock %}
+
+<style>
+a:link, a:visited {
+  background-color: rgba(255, 99, 132, 1);
+  color: white;
+  padding: 14px 25px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+}
+
+a:hover, a:active {
+  background-color: rgba(255, 99, 132, 0.4);
+}
+</style>

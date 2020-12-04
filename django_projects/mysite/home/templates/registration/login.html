@@ -1,0 +1,22 @@
+<style>
+input[type=submit] {
+  background-color: rgba(255, 99, 132, 1);
+  color: white;
+}
+</style>
+{% extends "base_bootstrap.html" %}
+
+{% block content %}
+<div class='text-center' style='padding:30rem 0;'>
+{% if form.errors %}
+  <p>Your username and password didn't match. Please try again.</p>
+{% endif %}
+
+<form method="post" action="{% url 'login' %}">
+{% csrf_token %}
+{{ form.as_p }}
+<input type="submit"  value="Login" />
+<input type="hidden" name="next" value="{{ next }}" />
+</form>
+</div>
+{% endblock %}

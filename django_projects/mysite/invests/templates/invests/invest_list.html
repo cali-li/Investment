@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<style>
+        .class1 {
+            padding-top: 10rem;
+        }
+</style>
+<style>
+.btn1:link, .btn1:visited {
+  color: rgba(255, 99, 132, 1);
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+}
+
+.btn1:hover, .btn1:active {
+  color: rgba(255, 99, 132, 0.4);
+}
+.btn2:link, .btn2:visited {
+  background-color: rgba(255, 99, 132, 1);
+  color: white;
+  padding: 3px 5px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+}
+
+.btn2:hover, .btn2:active {
+  background-color: rgba(255, 99, 132, 0.4);
+}
+</style>
+<body>
+{% extends "base_menu.html" %}
+
+{% block content %}
+<div class='class1'>
+  <h1 >All the Investments You Made</h1>
+  {% if invest_list %}
+  <ul style='padding-top:3rem;list-style-type: none;text-align: center;'>
+    {% for invest in invest_list %}
+    <div style='text-align: center;display: inline-block;border: 1px solid rgba(255, 99, 132, 1);background-color:rgba(255, 99, 132, 0.4);margin:10px;padding:20px;width:50%;height:100%;'>
+      <li>
+          {{ invest.type }}
+           <br/>
+          Invested {{ invest.invest }} dollars on {{ invest.date }}
+           <br/>
+          Notes: {{ invest.comments }}
+           <br/>
+          (<a href="{% url 'invests:invest_update' invest.id %}" class='btn1'>Update</a> |
+          <a href="{% url 'invests:invest_delete' invest.id %}" class='btn1'>Delete</a>)
+           <br/>
+           </div>
+      </li>
+    {% endfor %}
+  </ul>
+  {% else %}
+  <div style='text-align: center;'>
+      </br>
+    <p>There are no investments in the library.</p>
+  </div>
+  {% endif %}
+
+  <div style='padding:3rem;text-align: center;'>
+  <p>
+    {% if type_count > 0 %}
+      <a href="{% url 'invests:invest_create' %}" class='btn2'>Add an investment</a>
+    {% else %}
+      Please add an investment type before you add an investment.
+    {% endif %}
+  </p>
+  <p>
+  <a href="{% url 'invests:type_list' %}" class='btn2'>View different types of investments</a> ({{ type_count }}) |
+    <a href="{% url 'invests:type_create' %}"  class='btn2'>Add an investment type</a>
+  </p>
+  </div>
+</div>
+{% endblock %}
+</body>
+</html>

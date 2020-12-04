@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+.btn1:link, .btn1:visited {
+  color: rgba(255, 99, 132, 1);
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+}
+
+.btn1:hover, .btn1:active {
+  color: rgba(255, 99, 132, 0.4);
+
+}
+.btn2:link, .btn2:visited {
+  background-color: rgba(255, 99, 132, 1);
+  color: white;
+  padding: 3px 5px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+}
+
+.btn2:hover, .btn2:active {
+  background-color: rgba(255, 99, 132, 0.4);
+}
+.list {
+    text-decoration: none;
+    display: inline-block;
+
+}
+.service-list {
+list-style-type: none;
+margin-left:0px;
+padding-left:0px;
+display: inline-block;
+}
+</style>
+</head>
+<body>
+    {% extends "base_menu.html" %}
+{% block content %}
+<h1 style='padding-top:5rem;text-align: center;'>Blogs</h1>
+<div style="float:center;padding-top:3rem;display: inline-block;text-align: center;display: block;">
+<!-- https://www.w3schools.com/howto/howto_css_search_button.asp -->
+<form>
+  <input type="text" placeholder="Search.." name="search"
+  {% if search %} value="{{ search }}" {% endif %}
+  >
+  <button type="submit"><i class="fa fa-search"></i></button>
+<a href="{% url 'blogs:all' %}"><i class="fa fa-undo"  style='color:rgba(255, 99, 132, 1);'></i></a>
+</form>
+</div>
+<p>
+{% if blog_list %}
+<ul style='padding-top:3rem;list-style-type: none;text-align: center;'>
+  {% for blog in blog_list %}
+  <div style='text-align: center;display: inline-block;border: 1px solid rgba(255, 99, 132, 1);background-color:rgba(255, 99, 132, 0.4);margin:10px;padding:20px;width:50%;height:100%;'>
+    <li class='service-list'><div class='list' >
+
+        {% if blog.content_type %}
+                    <a href="{% url 'blogs:blog_detail'  blog.id %}">
+                        <img style="float:center; max-width:80%;" src="{% url 'blogs:blog_picture' blog.id %}"
+                            onclick="document.getElementById('overlay').style.display = 'block';">
+                    </a>
+        {% endif %}
+        </br>
+        <div style='float:center;'>
+        <a href="{% url 'blogs:blog_detail'  blog.id %}" class='btn1'>{{ blog.title }}</a>
+        {% if blog.owner == user %}
+        (<a href="{% url 'blogs:blog_update' blog.id %}" class='btn1'>Edit</a> |
+        <a href="{% url 'blogs:blog_delete' blog.id %}" class='btn1'>Delete</a>)
+        {% endif %}
+        {% if user.is_authenticated %}
+        <!-- Two hrefs with two stacked icons each - one showing and one hidden -->
+        <a href="#" onclick=
+            "favPost('{% url 'blogs:blog_unfavorite' blog.id %}', {{ blog.id }} );return false;"
+            {% if blog.id not in favorites %} style="display: none;" {% endif %}
+            id="favorite_star_{{blog.id}}">
+        <span class="fa-stack" style="vertical-align: middle;">
+        <i class="fa fa-star fa-stack-1x" style="color: orange;"></i>
+        <i class="fa fa-star-o fa-stack-1x"></i>
+        </span>
+        </a>
+        <!-- the second href -->
+        <a href="#" onclick=
+             "favPost('{% url 'blogs:blog_favorite' blog.id %}', {{ blog.id }} );return false;"
+            {% if blog.id in favorites %} style="display: none;" {% endif %}
+            id="unfavorite_star_{{blog.id}}">
+        <span class="fa-stack" style="vertical-align: middle;">
+        <i class="fa fa-star fa-stack-1x" style="display: none; color: orange;"></i>
+        <i class="fa fa-star-o fa-stack-1x"></i>
+        </span>
+        </a>
+        {% endif %}
+        </div>
+        </div>
+        <div >
+            {% if blog.text|length < 100 %}
+                {{ blog.text }}
+            {% else %}
+                {{ blog.text|slice:"0:99" }}
+                <a href="{% url 'blogs:blog_detail'  blog.id %}">...</a>
+            {% endif %}
+        </div>
+        <small>
+        {% if blog.owner.username %}
+            posted by {{ blog.owner.username }}
+        {% endif %}
+        {{ blog.natural_updated }}
+        </small>
+        </div>
+    </li>
+  {% endfor %}
+</ul>
+{% else %}
+<div style='text-align: center;'>
+    </br>
+    <p>There are no blogs in the database.</p>
+</div>
+{% endif %}
+</p>
+
+<p  style='padding-top:3rem;text-align: center;'>
+<a href="{% url 'blogs:blog_create' %}" class='btn2'>Add a Blog</a> |
+{% if user.is_authenticated %}
+<a href="{% url 'logout' %}?next={% url 'blogs:all' %}" class='btn2'>Logout</a>
+{% else %}
+<a href="{% url 'login' %}?next={% url 'blogs:all' %}" class='btn2'>Login</a>
+{% endif %}
+</p>
+
+<script>
+function favPost(url, blog_id) {
+    console.log('Requesting JSON');
+    $.post(url, {},  function(rowz){
+        console.log(url, 'finished');
+        $("#unfavorite_star_"+blog_id).toggle();
+        $("#favorite_star_"+blog_id).toggle();
+    }).fail(function(xhr) {
+        alert('Url failed with '+xhr.status+' '+url);
+    });
+}
+</script>
+
+{% endblock %}
+</body>
+</html>

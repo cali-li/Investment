@@ -1,0 +1,29 @@
+{% extends "base_menu.html" %}
+{% block content %}
+<style>
+input[type=submit] {
+  background-color: rgba(255, 99, 132, 1);
+  color: white;
+}
+.btn1:link, .btn1:visited {
+  color: rgba(255, 99, 132, 1);
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+}
+
+.btn1:hover, .btn1:active {
+  color: rgba(255, 99, 132, 0.4);
+}
+</style>
+<h1>Delete Comment</h1>
+
+<p>Are you sure you want to delete</p>
+<p>{{ comment.text }}?</p>
+
+<form action="" method="POST">
+  {% csrf_token %}
+  <input type="submit"  value="Yes, delete.">
+  <a href="{% url 'blogs:blog_detail' comment.blog.id %}" class='btn1' style='padding-left:1rem;'>Cancel</a>
+</form>
+{% endblock %}

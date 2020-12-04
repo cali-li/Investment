@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+input[type=submit] {
+  background-color: rgba(255, 99, 132, 1);
+  color: white;
+}
+</style>
+</head>
+<body>
+    {% extends "base_menu.html" %}
+{% load humanize %} <!-- https://docs.djangoproject.com/en/3.0/ref/contrib/humanize -->
+{% block head %}
+<style>
+.overlay{
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 10;
+  display: none;
+  background-color: rgba(0,0,0,0.5); /*dim the background*/
+}
+</style>
+{% endblock %}
+{% block content %}
+
+{% if blog.content_type %}
+<div id="overlay" class="overlay" style="text-align: center;"
+   onclick="document.getElementById('overlay').style.display = 'none';" >
+<img style="width:90%;margin-top: 50px; border:3px solid black;" src="{% url 'blogs:blog_picture' blog.id %}">
+</div>
+{% endif %}
+
+</br>
+<span style="float: right;">
+({{ blog.updated_at|naturaltime }})
+{% if blog.owner == user %}
+<a href="{% url 'blogs:blog_update' blog.id %}"><i class="fa fa-pencil"></i></a>
+<a href="{% url 'blogs:blog_delete' blog.id %}"><i class="fa fa-trash"></i></a>
+{% endif %}
+</span>
+</br>
+<div style='text-align:center;'>
+{% if blog.content_type %}
+<img style="float:center; max-width:50%;" src="{% url 'blogs:blog_picture' blog.id %}"
+    onclick="document.getElementById('overlay').style.display = 'block';">
+{% endif %}
+</div>
+<div style='text-align:center;'>
+<h1 style='padding-top:5rem;'>{{ blog.title }}</h1>
+</div>
+<p style='padding-top:3rem;'>
+{{ blog.text }}
+</p>
+
+
+<p>
+({{ blog.updated_at|naturaltime }})
+</p>
+{% if user.is_authenticated %}
+<br clear="all"/>
+<p>
+{% load crispy_forms_tags %}
+<form method="post" action="{% url 'blogs:blog_comment_create' blog.id %}" style='padding-top:3rem;'>
+    {% csrf_token %}
+    {{ comment_form|crispy }}
+<input type="submit" value="Submit">
+<input type="submit" value="All Blogs" onclick="window.location.href='{% url 'blogs:all' %}';return false;">
+</form>
+</p>
+{% endif %}
+<div style='padding-top:3rem;'>
+{% for comment in comments %}
+<p> {{ comment.text }}
+({{ comment.updated_at|naturaltime }})
+{% if user == comment.owner %}
+<a href="{% url 'blogs:blog_comment_delete' comment.id %}"><i class="fa fa-trash"></i></a>
+{% endif %}
+</p>
+
+{% endfor %}
+</div>
+{% endblock %}
+
+</body>
+</html>
+

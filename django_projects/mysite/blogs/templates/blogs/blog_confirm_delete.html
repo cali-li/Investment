@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+input[type=submit] {
+  background-color: rgba(255, 99, 132, 1);
+  color: white;
+}
+</style>
+</head>
+<body>
+    {% extends "base_menu.html" %}
+{% block content %}
+<h1 style='padding-top:5rem;'>Delete Blog</h1>
+
+<p style='padding-top:3rem;'>Are you sure you want to delete the blog: {{ blog }}?</p>
+
+<form action="" method="POST">
+  {% csrf_token %}
+  <div style='padding-top:3rem;'>
+  <input type="submit" value="Yes, delete.">
+<input type="submit" onclick="window.location='{% url 'blogs:all' %}' ; return false;" value="Cancel">
+
+  </div>
+</form>
+{% endblock %}
+</body>
+</html>
+
